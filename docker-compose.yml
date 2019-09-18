@@ -10,7 +10,7 @@ services:
     depends_on:
       - server
   server:
-    image: the-best-todo-back-end
+    image: denyskozak/the-best-todo-back-end
     volumes:
       - "./dockerScripts:/app/dockerScripts"
     ports:
