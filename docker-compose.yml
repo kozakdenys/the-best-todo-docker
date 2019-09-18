@@ -1,8 +1,7 @@
 version: '3'
 services:
   web:
-    build:
-      context: ../front-end
+    image: denyskozak/the-best-todo-front-end
     ports:
       - "80:80"
     restart: always
@@ -11,14 +10,17 @@ services:
     depends_on:
       - server
   server:
-    build:
-      context: ../back-end
+    image: the-best-todo-back-end
+    volumes:
+      - "./dockerScripts:/app/dockerScripts"
     ports:
       - "4000:4000"
     restart: always
+    entrypoint: ["sh", "./dockerScripts/entrypoint.sh"]
     environment:
       NODE_ENV: production
       PRISMA_ENDPOINT: ${PRISMA_ENDPOINT}
+      APP_SECRET: ${APP_SECRET}
     depends_on:
       - prisma
   prisma:
